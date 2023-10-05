@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
@@ -15,16 +15,21 @@ import { useChat } from "ai/react";
 import { ScrollArea } from "./ui/scroll-area";
 
 const Chat = () => {
-  const { messages, handleInputChange, handleSubmit, input } = useChat({
-    api: "/api/chat",
-  });
+  const { messages, handleInputChange, handleSubmit, input, setInput } =
+    useChat({
+      api: "/api/chat",
+    });
 
   useEffect(() => {
-    const scrollAnchor = document.getElementById('scrollAnchor');
+    setInput("ola");
+  }, [setInput]);
+
+  useEffect(() => {
+    const scrollAnchor = document.getElementById("scrollAnchor");
 
     if (messages && messages.length >= 2 && messages[1].role && scrollAnchor) {
       scrollAnchor.scrollTop = scrollAnchor.scrollHeight;
-      console.log(messages[1].role)
+      console.log(messages[1].role);
     }
   }, [messages]);
 
@@ -70,7 +75,7 @@ const Chat = () => {
           <Input
             placeholder="Como posso ajudar?"
             value={input}
-            onChange={handleInputChange}
+            onChange={(e) => setInput(e.target.value)}
           />
           <Button type="submit">Send</Button>
         </form>
