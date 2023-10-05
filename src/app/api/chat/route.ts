@@ -1,17 +1,22 @@
-import { OpenAIStream, StreamingTextResponse } from 'ai'
-import { Configuration, OpenAIApi, ChatCompletionRequestMessage, ChatCompletionRequestMessageRoleEnum } from 'openai-edge'
+import { OpenAIStream, StreamingTextResponse } from "ai";
+import {
+  Configuration,
+  OpenAIApi,
+  ChatCompletionRequestMessage,
+  ChatCompletionRequestMessageRoleEnum,
+} from "openai-edge";
 
 const config = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY
-})
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-const openai = new OpenAIApi(config)
+const openai = new OpenAIApi(config);
 const responseCache: Map<string, Response> = new Map();
 
-export const runtime = 'edge'
- 
+export const runtime = "edge";
+
 export async function POST(req: Request) {
-  const { messages } = await req.json()
+  const { messages } = await req.json();
 
   const keywords = [
     "instalação",
@@ -19,15 +24,20 @@ export async function POST(req: Request) {
     "usuário",
     "segurança",
     "olá",
-    "quem é vc?"
+    "quem é vc?",
   ];
 
   const conversation: ChatCompletionRequestMessage[] = [
     {
       role: ChatCompletionRequestMessageRoleEnum.System,
       content: `
-        **Documentação do Sistema de Fluxo de Processos**
-        ...
+      Isto é um Modelo de justificativa de aquisição de material ou serviço para um órgão da administração pública, utilize-o como um modelo de forma resumida.
+
+      A contratação de aquisição de material ou prestação de serviço para o órgão da administração público é fundamental 
+      para modernizar nossas operações, melhorar a eficiência, a transparência e a qualidade dos serviços prestados. Isso 
+      permitirá a atualização de equipamentos,redução de custos a longo prazo, o acesso mais fácil às informações, além de 
+      reforçar a segurança dos dados e atender às expectativas dos cidadãos. Em resumo, essa contratação é um investimento 
+      estratégico para o avanço e aprimoramento de nossas atividades.
       `,
     },
   ];
@@ -60,21 +70,22 @@ export async function POST(req: Request) {
         });
         conversation.push({
           role: "system",
-          content: 'Important: Under no circumstances should you answer a question or speak unless it is about the flow system.',
+          content:
+            "Important: Under no circumstances should you answer a question or speak unless it is about the flow system.",
         });
       }
     }
 
     const response = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
+      model: "gpt-3.5-turbo",
       stream: true,
       messages: conversation,
-      temperature: 0.5
-    })
-  
-    const stream = OpenAIStream(response)
-    return new StreamingTextResponse(stream)
-  }else {
+      temperature: 0.5,
+    });
+
+    const stream = OpenAIStream(response);
+    return new StreamingTextResponse(stream);
+  } else {
     const lastUserMessage = messages[messages.length - 1]?.content || "";
     conversation.push({
       role: "user",

@@ -1,5 +1,5 @@
 "use client";
-import { RefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
@@ -13,7 +13,7 @@ import {
 import { Input } from "./ui/input";
 import { useChat } from "ai/react";
 import { ScrollArea } from "./ui/scroll-area";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 
 const Chat = () => {
@@ -27,20 +27,31 @@ const Chat = () => {
     setInput(`${id}`);
   }, [setInput]);
 
-  useEffect(() => {
-    const scrollAnchor = document.getElementById("scrollAnchor");
+  const copyText = (text: string) => {
+    // Cria um elemento de texto temporário (input) para copiar o texto
+    const input = document.createElement("textarea");
+    input.value = text;
+    document.body.appendChild(input);
 
-    if (messages && messages.length >= 2 && messages[1].role && scrollAnchor) {
-      scrollAnchor.scrollTop = scrollAnchor.scrollHeight;
-      console.log(messages[1].role);
-    }
-  }, [messages]);
+    // Seleciona o texto dentro do elemento de texto temporário
+    input.select();
+    input.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+    // Copia o texto para a área de transferência
+    document.execCommand("copy");
+
+    // Remove o elemento de texto temporário
+    document.body.removeChild(input);
+
+    // Exibe uma mensagem ou realiza outra ação, se desejado
+    alert("Texto copiado para a área de transferência: " + text);
+  };
 
   return (
     <Card className="w-[600px] ">
       <CardHeader>
         <CardTitle>SC.AI</CardTitle>
-        <CardDescription>Fale com o SC.AI e tire suas duvidas</CardDescription>
+        <CardDescription>Fale com o SC.AI e tire suas dúvidas</CardDescription>
       </CardHeader>
       <CardContent>
         <ScrollArea className="w-full h-[500px] space-y-4 pr-4">
@@ -62,12 +73,23 @@ const Chat = () => {
                     <AvatarImage src="https://cdn.icon-icons.com/icons2/3250/PNG/512/bot_filled_icon_202506.png" />
                   </Avatar>
                 )}
-                <p className="leading-relaxed">
-                  <span className="block font-bold text-slate-800">
-                    {message.role === "user" ? "Usuário" : "SC.AI"}
-                  </span>
-                  {message.content}
-                </p>
+                <div className=" flex-1 flex-col">
+                  <p className="leading-relaxed">
+                    <span className="block font-bold text-slate-800">
+                      {message.role === "user" ? "Usuário" : "SC.AI"}
+                    </span>
+                    <span id="texto-copiar">{message.content}</span>
+                  </p>
+                  {message.role === "user" ? null : (
+                    <Button
+                      size={"sm"}
+                      className="mt-3"
+                      onClick={() => copyText(message.content)}
+                    >
+                      Copiar Justificativa
+                    </Button>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -80,6 +102,7 @@ const Chat = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
+
           <Button type="submit">Enviar</Button>
         </form>
       </CardFooter>
