@@ -13,15 +13,20 @@ import {
 import { Input } from "./ui/input";
 import { useChat } from "ai/react";
 import { ScrollArea } from "./ui/scroll-area";
+import { useLocation, useParams } from "react-router-dom";
+import queryString from "query-string";
 
 const Chat = () => {
-  const { messages, handleInputChange, handleSubmit, input, setInput } =
-    useChat({
-      api: "/api/chat",
-    });
+  const { messages, handleSubmit, input, setInput } = useChat({
+    api: "/api/chat",
+  });
+
+  // const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    setInput("ola");
+    const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("id");
+    setInput(`${id}`);
   }, [setInput]);
 
   useEffect(() => {
