@@ -21,8 +21,6 @@ const Chat = () => {
     api: "/api/chat",
   });
 
-  // const { id } = useParams<{ id: string }>();
-
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("id");
@@ -82,7 +80,7 @@ const Chat = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
-          <Button type="submit">Send</Button>
+          <Button type="submit">Enviar</Button>
         </form>
       </CardFooter>
     </Card>
