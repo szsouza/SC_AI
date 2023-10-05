@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
@@ -13,18 +13,28 @@ import {
 import { Input } from "./ui/input";
 import { useChat } from "ai/react";
 import { ScrollArea } from "./ui/scroll-area";
+import { useLocation, useParams } from "react-router-dom";
+import queryString from "query-string";
 
 const Chat = () => {
-  const { messages, handleInputChange, handleSubmit, input } = useChat({
+  const { messages, handleSubmit, input, setInput } = useChat({
     api: "/api/chat",
   });
 
+  // const { id } = useParams<{ id: string }>();
+
   useEffect(() => {
-    const scrollAnchor = document.getElementById('scrollAnchor');
+    const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("id");
+    setInput(`${id}`);
+  }, [setInput]);
+
+  useEffect(() => {
+    const scrollAnchor = document.getElementById("scrollAnchor");
 
     if (messages && messages.length >= 2 && messages[1].role && scrollAnchor) {
       scrollAnchor.scrollTop = scrollAnchor.scrollHeight;
-      console.log(messages[1].role)
+      console.log(messages[1].role);
     }
   }, [messages]);
 
@@ -70,7 +80,7 @@ const Chat = () => {
           <Input
             placeholder="Como posso ajudar?"
             value={input}
-            onChange={handleInputChange}
+            onChange={(e) => setInput(e.target.value)}
           />
           <Button type="submit">Send</Button>
         </form>
