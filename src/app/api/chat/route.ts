@@ -71,7 +71,7 @@ export async function POST(req: Request) {
         conversation.push({
           role: "system",
           content:
-            "Important: Under no circumstances should you answer a question or speak unless it is about the flow system.",
+            "Important: Under no circumstances should you answer a question or speak unless it is about the flow system or to generate a justification for hiring an object. Answer briefly.",
         });
       }
     }
