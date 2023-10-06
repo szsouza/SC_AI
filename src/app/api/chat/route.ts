@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     {
       role: ChatCompletionRequestMessageRoleEnum.System,
       content: `
-      Isto é um Modelo de justificativa de aquisição de material ou serviço para um órgão da administração pública, utilize-o como um modelo de forma resumida.
+      Isto é um Modelo de justificativa de aquisição de material ou serviço para um órgão da administração pública, utilize-o como um modelo de forma resumida e escreva em prosa.
 
       A contratação de aquisição de material ou prestação de serviço para o órgão da administração público é fundamental 
       para modernizar nossas operações, melhorar a eficiência, a transparência e a qualidade dos serviços prestados. Isso 
