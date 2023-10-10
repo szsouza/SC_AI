@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import scai from "../../public/scai.png";
+import user from "../../public/avatar-1.jpg";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -50,8 +52,8 @@ const Chat = () => {
   return (
     <Card className="w-[600px] ">
       <CardHeader>
-        <CardTitle>SC.AI</CardTitle>
-        <CardDescription>Fale com o SC.AI e tire suas dúvidas</CardDescription>
+        <CardTitle>SCAI</CardTitle>
+        <CardDescription>Fale com o SCAI e tire suas dúvidas</CardDescription>
       </CardHeader>
       <CardContent>
         <ScrollArea className="w-full h-[500px] space-y-4 pr-4">
@@ -64,13 +66,13 @@ const Chat = () => {
                 {message.role === "user" && (
                   <Avatar>
                     <AvatarFallback>DF</AvatarFallback>
-                    <AvatarImage src="https://static.vecteezy.com/system/resources/thumbnails/008/442/086/small/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" />
+                    <AvatarImage src="https://imageupload.io/ib/HK8gJAgyzGcoOmJ_1696934151.jpg" />
                   </Avatar>
                 )}
                 {message.role === "assistant" && (
                   <Avatar>
                     <AvatarFallback>DF</AvatarFallback>
-                    <AvatarImage src="https://cdn.icon-icons.com/icons2/3250/PNG/512/bot_filled_icon_202506.png" />
+                    <AvatarImage src="https://imageupload.io/ib/dpYxckpgxiRcvtF_1696934289.png" />
                   </Avatar>
                 )}
                 <div className=" flex-1 flex-col">
