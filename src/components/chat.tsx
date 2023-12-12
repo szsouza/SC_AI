@@ -72,7 +72,7 @@ const Chat = () => {
                 {message.role === "assistant" && (
                   <Avatar>
                     <AvatarFallback>DF</AvatarFallback>
-                    <AvatarImage src="../../public/scai.png" />
+                    <AvatarImage src="https://i.ibb.co/pycJp3f/scai.png" />
                   </Avatar>
                 )}
                 <div className=" flex-1 flex-col">
