@@ -78,7 +78,7 @@ const Chat = () => {
                 <div className=" flex-1 flex-col">
                   <p className="leading-relaxed">
                     <span className="block font-bold text-slate-800">
-                      {message.role === "user" ? "Usuário" : "SC.AI"}
+                      {message.role === "user" ? "Usuário" : "SCAI"}
                     </span>
                     <span id="texto-copiar">{message.content}</span>
                   </p>
