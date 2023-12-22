@@ -46,7 +46,7 @@ const Chat = () => {
     document.body.removeChild(input);
 
     // Exibe uma mensagem ou realiza outra ação, se desejado
-    alert("Texto copiado para a área de transferência: " + text);
+    alert("Texto copiado para a área de transferência" );
   };
 
   return (
